@@ -111,6 +111,9 @@ int main(void) {
 	// - Reinforced hash table open addressing mechanics (probing, termination).
 	// - Tradeoffs: O(n) average time, O(n) extra space; careful with capacity.
 	// - For interviews, clarity and correctness beat micro-optimizations.
+	// Compared with others:
+	// - Matches the canonical hash-map approach in the practice repository.
+	// - Considered a sorting + two-pointer variant (O(n log n)) but it loses original indices.
 	return 0;
 }
 

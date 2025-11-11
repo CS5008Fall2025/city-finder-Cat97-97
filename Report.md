@@ -65,4 +65,4 @@ Answer: A hash table stores key→value pairs in an array indexed by a hash of t
 
 2. Select one coding question (this module or previous) from the [coding practice repository](https://github.com/CS5008-khoury/Resources/blob/main/LeetCodePractice.md) and include a c file with that code with your submission. Make sure to add comments on what you learned, and if you compared your solution with others. 
 
-Included: coding_practice.c (Two Sum). It demonstrates an open-addressing hash map to reach O(n) average time, with brief comments on lessons learned.
+Included: coding_practice.c (Two Sum). It demonstrates an open-addressing hash map to reach O(n) average time, with brief comments on lessons learned. Compared with canonical solutions in the repository: the approach matches the standard hash map method; I also considered the sort + two-pointer variant (O(n log n)) but it loses original indices.
