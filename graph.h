@@ -17,19 +17,21 @@ typedef struct {
 	Edge **adjacency;     // size numVertices, each a linked list
 } Graph;
 
+// Allocates a graph with the specified number of vertices.
+// Vertex names are initialized to NULL; adjacency lists start empty.
 Graph *create_graph(int numVertices);
 void free_graph(Graph *graph);
 
-// Copies name into internal storage at index
+// Stores a copy of 'name' as the vertex name for 'index'.
 void set_vertex_name(Graph *graph, int index, const char *name);
 
-// Returns index of vertex name, or -1 if not found
+// Returns index for the given vertex name, or -1 if not found.
 int find_vertex_index(const Graph *graph, const char *name);
 
-// Adds an undirected edge (u <-> v) with weight
+// Adds an undirected weighted edge between u and v.
 void add_undirected_edge(Graph *graph, int u, int v, int weight);
 
-// Lists cities to stdout, one per line, in index order
+// Prints each city name on its own line in index order.
 void list_cities(const Graph *graph);
 
 #endif

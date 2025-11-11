@@ -17,3 +17,26 @@ Did you use any external resources (you do not have to cite in class material)? 
 - one row per resource
 
 
+## How to Build and Run
+
+1. Build (from project root):
+	- `make`
+2. Run with provided small dataset:
+	- `./map.out vertices.txt distances.txt`
+3. Run with larger dataset:
+	- `./map.out city_list.dat city_distances.dat`
+4. Commands inside the program:
+	- `list` — list all cities
+	- `<city1> <city2>` — compute shortest path and total distance
+	- `help` — print help
+	- `exit` — exit the program
+
+## Testing
+
+- Quick smoke tests:
+	- `make test` (runs `tests/smoke_test.sh` against small and large datasets)
+
+## Coding Practice File
+
+- `coding_practice.c` implements the Two Sum problem with a hash map approach and includes notes on what was learned and how it compares with canonical solutions.
+

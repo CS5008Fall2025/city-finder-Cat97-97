@@ -8,6 +8,9 @@ myprogram: # it needs to compile out to >>>map.out<<<!
 	$(CC) $(CFLAGS) -o map.out $(CFILES)  
 	
 
+test: all
+	bash tests/smoke_test.sh
+
 
 clean: #this is a clean target, it removes all the .out files, called via > make clean
 	rm -f *.out

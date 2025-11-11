@@ -1,7 +1,5 @@
 #include "dijkstra.h"
 
-static const int INF_DISTANCE = 1e9;
-
 int dijkstra_shortest_path(const Graph *graph, int src, int dst, int **outPath, int *outPathLen, int *outTotalDistance) {
 	if (graph == NULL || outPath == NULL || outPathLen == NULL || outTotalDistance == NULL) {
 		return -1;
