@@ -8,24 +8,55 @@ Github Account name: Cat97-97
 Link to Assignment on Github: (copy and paste the link to your assignment repo here)
 https://github.com/CS5008Fall2025/city-finder-Cat97-97.git
 How many hours did it take you to complete this assignment (estimate)? 
-13 hours
+15 hours
 Did you collaborate with any other students/TAs/Professors? If so, tell us who and in what capacity.  
-- one per row, add more if needed
+- None
 
 
 Did you use any external resources (you do not have to cite in class material)? (Cite them below)  
-- one row per resource
+- None (beyond standard C library and course materials)
 
 
 ## How to Build and Run
 
-1. Build (from project root):
-	- `make`
-2. Run with provided small dataset:
-	- `./map.out vertices.txt distances.txt`
-3. Run with larger dataset:
-	- `./map.out city_list.dat city_distances.dat`
-4. Commands inside the program:
+Prerequisites:
+- macOS/Linux with `gcc` and `make` installed.
+- Run all commands from the project root directory (`city-finder-Cat97-97`).
+
+1. Build the program:
+
+```bash
+make
+```
+
+This produces an executable named `map.out`.
+
+2. Run with the provided small dataset:
+
+```bash
+./map.out vertices.txt distances.txt
+```
+
+3. Run with the larger dataset:
+
+```bash
+./map.out city_list.dat city_distances.dat
+```
+
+4. Clean build artifacts (optional):
+
+```bash
+make clean
+```
+
+5. Optional: build and run the interview-practice program:
+
+```bash
+gcc -Wall -o two_sum.out coding_practice.c
+./two_sum.out
+```
+
+6. Commands inside the interactive program:
 	- `list` — list all cities
 	- `<city1> <city2>` — compute shortest path and total distance
 	- `help` — print help

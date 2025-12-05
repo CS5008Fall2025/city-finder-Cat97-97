@@ -1,3 +1,15 @@
+/* 
+ * City Finder - interactive shortest-path CLI
+ *
+ * Reads a list of city names and undirected distances, then provides a small
+ * REPL to list cities and compute the shortest path between two given cities
+ * using Dijkstra's algorithm.
+ *
+ * Usage:
+ *   ./city-finder <vertices> <distances>
+ *
+ * This file contains the program entry-point and small UI helpers.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,17 +18,42 @@
 #include "io.h"
 #include "dijkstra.h"
 
+/* 
+ * print_welcome
+ * 	Print a banner and the list of available commands.
+ * 	No side effects beyond stdout.
+ */
 static void print_welcome(void) {
 	printf("*****Welcome to the shortest path finder!******\n");
 	print_help();
 	printf("*******************************************************\n");
 }
 
+/* 
+ * prompt
+ * 	Display the input prompt and flush stdout to ensure it appears
+ * 	immediately in interactive sessions.
+ */
 static void prompt(void) {
 	printf("Where do you want to go today? ");
 	fflush(stdout);
 }
 
+/* 
+ * handle_two_cities
+ * 	Resolve city names to vertex indices, run Dijkstra from src to dst,
+ * 	and print either the resulting path and total distance or an error.
+ *
+ * Parameters:
+ * 	- graph: loaded graph of cities and distances (must be non-NULL)
+ * 	- city1, city2: null-terminated city names to connect
+ *
+ * Behavior:
+ * 	- On success, prints the path in order and its total distance.
+ * 	- On failure or unknown city, prints "Invalid Command" and help or
+ * 	  "Path Not Found..." as appropriate.
+ * 	- Frees any path buffer allocated by dijkstra_shortest_path.
+ */
 static void handle_two_cities(Graph *graph, const char *city1, const char *city2) {
 	int src = find_vertex_index(graph, city1);
 	int dst = find_vertex_index(graph, city2);
@@ -45,6 +82,17 @@ static void handle_two_cities(Graph *graph, const char *city1, const char *city2
 	free(path);
 }
 
+/* 
+ * main
+ * 	Top-level program flow:
+ * 	 - parse CLI arguments (expects vertices and distances files),
+ * 	 - load the graph,
+ * 	 - enter a small command loop to list cities, show help, compute paths,
+ * 	 - clean up and exit.
+ *
+ * Returns:
+ * 	0 on normal termination; non-zero on usage or loading errors.
+ */
 int main(int argc, char **argv) {
 	if (argc != 3) {
 		fprintf(stderr, "Usage: %s <vertices> <distances>\n", argv[0]);

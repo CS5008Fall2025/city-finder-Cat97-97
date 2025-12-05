@@ -1,5 +1,18 @@
 #include "io.h"
+/*
+ * I/O helpers
+ *
+ * Loading utilities for vertex lists and distance edges from text files,
+ * plus a small help printer for the interactive shell.
+ */
 
+/* 
+ * count_lines_in_file
+ * 	Return the number of non-empty lines in 'filePath'.
+ *
+ * Returns:
+ * 	-1 on error, otherwise the number of lines with non-whitespace content.
+ */
 static int count_lines_in_file(const char *filePath) {
 	FILE *fp = fopen(filePath, "r");
 	if (fp == NULL) {
@@ -22,6 +35,20 @@ static int count_lines_in_file(const char *filePath) {
 	return count;
 }
 
+/* 
+ * load_vertices
+ * 	Read city names from a file (one per non-empty line) and create a graph
+ * 	with that many vertices. Each vertex's name is set to the corresponding
+ * 	line content in order.
+ *
+ * Parameters:
+ * 	- verticesFilePath: path to the file containing city names
+ * 	- outGraph: on success, receives an allocated Graph*
+ *
+ * Returns:
+ * 	1 on success, 0 on failure.
+ * 	Caller owns the returned Graph* and must free it with free_graph.
+ */
 int load_vertices(const char *verticesFilePath, Graph **outGraph) {
 	if (outGraph == NULL || verticesFilePath == NULL) {
 		return 0;
@@ -61,6 +88,15 @@ int load_vertices(const char *verticesFilePath, Graph **outGraph) {
 	return 1;
 }
 
+/* 
+ * load_distances
+ * 	Read undirected edges from a file where each non-empty line has:
+ * 		<city1> <city2> <distance>
+ * 	City names must already exist in 'graph'. Unknown names are ignored.
+ *
+ * Returns:
+ * 	1 on success (including lines skipped for safety), 0 on file open error.
+ */
 int load_distances(Graph *graph, const char *distancesFilePath) {
 	if (graph == NULL || distancesFilePath == NULL) {
 		return 0;
@@ -102,6 +138,10 @@ int load_distances(Graph *graph, const char *distancesFilePath) {
 	return 1;
 }
 
+/* 
+ * print_help
+ * 	Display available commands for the interactive program.
+ */
 void print_help(void) {
 	printf("Commands:\n");
 	printf("\tlist - list all cities\n");

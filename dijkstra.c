@@ -1,5 +1,31 @@
 #include "dijkstra.h"
+/*
+ * Dijkstra's algorithm
+ *
+ * Implements a straightforward O(V^2 + E) version using arrays instead of a
+ * heap for simplicity and portability. Reconstructs the actual shortest path
+ * and returns it to the caller.
+ */
 
+/* 
+ * dijkstra_shortest_path
+ * 	Compute the shortest path from vertex 'src' to vertex 'dst' in 'graph'.
+ *
+ * Parameters:
+ * 	- graph: input graph (non-NULL)
+ * 	- src, dst: 0-based vertex indices
+ * 	- outPath: on success, set to malloc'd array of vertex indices in order
+ * 	- outPathLen: number of vertices in 'outPath'
+ * 	- outTotalDistance: total distance of the shortest path
+ *
+ * Returns:
+ * 	>0 if a path is found,
+ * 	0  if no path exists,
+ * 	-1 on invalid input or allocation failure.
+ *
+ * Notes:
+ * 	Caller owns and must free(*outPath) when return value > 0.
+ */
 int dijkstra_shortest_path(const Graph *graph, int src, int dst, int **outPath, int *outPathLen, int *outTotalDistance) {
 	if (graph == NULL || outPath == NULL || outPathLen == NULL || outTotalDistance == NULL) {
 		return -1;

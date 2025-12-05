@@ -1,3 +1,16 @@
+/* 
+ * coding_practice.c
+ *
+ * Standalone practice program (not part of the city map build).
+ * Demonstrates solving the Two Sum problem using a tiny open-addressing
+ * hash map implemented in C.
+ *
+ * Build (example):
+ *   gcc -Wall -o two_sum.out coding_practice.c
+ *
+ * Run:
+ *   ./two_sum.out
+ */
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -19,6 +32,10 @@ typedef struct {
 	int capacity;
 } IntMap;
 
+/* 
+ * hash_int
+ * 	Lightweight integer hashing (Wang mix) used by the tiny hash map.
+ */
 static unsigned int hash_int(int x) {
 	// Thomas Wang 32-bit mix
 	unsigned int v = (unsigned int)x;
@@ -30,6 +47,11 @@ static unsigned int hash_int(int x) {
 	return v;
 }
 
+/* 
+ * map_create
+ * 	Allocate a map with the given capacity; entries are zero-initialized.
+ * 	Returns NULL on allocation failure.
+ */
 static IntMap *map_create(int capacity) {
 	IntMap *m = (IntMap *)malloc(sizeof(IntMap));
 	if (!m) return NULL;
@@ -42,12 +64,21 @@ static IntMap *map_create(int capacity) {
 	return m;
 }
 
+/* 
+ * map_free
+ * 	Release all heap memory associated with the map. Safe on NULL.
+ */
 static void map_free(IntMap *m) {
 	if (!m) return;
 	free(m->entries);
 	free(m);
 }
 
+/* 
+ * map_put
+ * 	Insert or update a key->value mapping using linear probing.
+ * 	Precondition: map was created with sufficient capacity.
+ */
 static void map_put(IntMap *m, int key, int value) {
 	unsigned int h = hash_int(key);
 	int idx = (int)(h % (unsigned int)m->capacity);
@@ -62,6 +93,11 @@ static void map_put(IntMap *m, int key, int value) {
 	}
 }
 
+/* 
+ * map_get
+ * 	Lookup a key; if found, writes value to outValue and returns 1.
+ * 	Returns 0 if the key does not exist.
+ */
 static int map_get(IntMap *m, int key, int *outValue) {
 	unsigned int h = hash_int(key);
 	int idx = (int)(h % (unsigned int)m->capacity);
@@ -79,6 +115,12 @@ static int map_get(IntMap *m, int key, int *outValue) {
 }
 
 // Returns 1 on success and writes indices into outA/outB; else 0.
+/* 
+ * two_sum
+ * 	Given an array and target sum, find two indices i,j such that
+ * 	nums[i] + nums[j] == target. Indices are returned via outA/outB.
+ * 	Average time O(n), extra space O(n).
+ */
 static int two_sum(int *nums, int n, int target, int *outA, int *outB) {
 	IntMap *m = map_create(n * 2 + 1);
 	if (!m) return 0;
@@ -97,6 +139,10 @@ static int two_sum(int *nums, int n, int target, int *outA, int *outB) {
 	return 0;
 }
 
+/* 
+ * main
+ * 	Demonstrates two_sum on a small example array.
+ */
 int main(void) {
 	int nums[] = {2, 7, 11, 15};
 	int n = (int)(sizeof(nums) / sizeof(nums[0]));
